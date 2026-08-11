@@ -12,6 +12,10 @@
   <artifactId>spring-petclinic</artifactId>
   <version>4.0.0-SNAPSHOT</version>
 
+  <scm>
+    <developerConnection>scm:git:https://github.com/grid-jjungic/spring-petclinic.git</developerConnection>
+  </scm>
+
   <name>petclinic</name>
 
   <properties>
