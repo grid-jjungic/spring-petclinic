@@ -1,5 +1,3 @@
-rootProject.name = 'spring-petclinic-NEW'
-
 pluginManagement {
   repositories {
     maven { url 'localhost:8081/repository/maven-public/' }
@@ -13,3 +11,5 @@ dependencyResolutionManagement {
     allowInsecureProtocol = true
   }
 }
+
+rootProject.name = 'spring-petclinic-NEW'
