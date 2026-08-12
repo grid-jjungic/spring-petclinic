@@ -7,12 +7,13 @@ plugins {
   id 'org.cyclonedx.bom' version '3.2.4'
   id 'io.spring.javaformat' version '0.0.47'
   id "io.spring.nohttp" version "0.0.11"
+  id "pl.allegro.tech.build.axion-release" version "1.21.2"
 }
 
 gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTest" ]
 
 group = 'org.springframework.samples'
-version = '4.0.0-SNAPSHOT'
+version = scmVersion.version
 
 java {
   toolchain {
@@ -91,3 +92,15 @@ checkFormatAotTest.enabled = false
 
 formatAot.enabled = false
 formatAotTest.enabled = false
+
+import java.awt.Desktop
+
+tasks.register('openTests') {
+    dependsOn('build')
+    group = 'help'
+    description = 'Opens the test report in the browser.'
+
+    doLast {
+        Desktop.getDesktop().open(file("${buildDir}/reports/tests/test/index.html"))
+    }
+}
