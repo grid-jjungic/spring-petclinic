@@ -1,15 +1,13 @@
 pluginManagement {
   repositories {
-    maven { url 'http://localhost:8081/repository/maven-public/'
-    allowInsecureProtocol = true
+    maven { url 'http://127.0.0.1:8081/repository/maven-public/'
     }
   }
 }
 
 dependencyResolutionManagement {
     repositories {
-    maven { url 'http://localhost:8081/repository/maven-public/' 
-    allowInsecureProtocol = true
+    maven { url 'http://127.0.0.1:8081/repository/maven-public/'
     }
   }
 }

@@ -107,7 +107,7 @@ tasks.register('openTests') {
 }
 
 publishing {
-    publications { 
+    publications {
         mavenJava(MavenPublication) {
             from components.java
         }
@@ -116,7 +116,6 @@ publishing {
         maven {
             name = 'nexus-server'
             url = project.version.endsWith('SNAPSHOT') ? 'http://localhost:8081/repository/maven-snapshots/' : 'http://localhost:8081/repository/maven-releases/'
-            allowInsecureProtocol = true
             credentials {
                 username = project.findProperty('nexusUser')
                 password = project.findProperty('nexusPassword')
