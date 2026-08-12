@@ -106,10 +106,6 @@ tasks.register('openTests') {
     }
 }
 
-import io.github.cdimascio.dotenv.Dotenv
-def dotenv = Dotenv.load()
-
-
 publishing {
     publications { 
         mavenJava(MavenPublication) {
@@ -122,15 +118,15 @@ publishing {
             url = project.version.endsWith('SNAPSHOT') ? 'http://localhost:8081/repository/maven-snapshots/' : 'http://localhost:8081/repository/maven-releases/'
             allowInsecureProtocol = true
             credentials {
-                username = dotenv.get('ADMIN_USER')
-                password = dotenv.get('ADMIN_PASSWORD')
+                username = project.findProperty('nexusUser')
+                password = project.findProperty('nexusPassword')
             }
         }
     }
 }
 
 tasks.register('uploadToNexus') {
-    dependsOn('publishMavenJavaPublicationToNexusRepository')
+    dependsOn('publishMavenJavaPublicationToNexus-serverRepository')
     group = 'publish'
     description = 'Uploads the artifact to nexus.'
 
