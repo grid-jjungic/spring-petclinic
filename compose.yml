@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:9.7
+    container_name: petclinic-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-petclinic}
+      MYSQL_USER: ${MYSQL_USER:-petclinic}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-petclinic}
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: petclinic-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/${MYSQL_DATABASE:-petclinic}?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER:-petclinic}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD:-petclinic}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dbdata:

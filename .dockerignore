@@ -1,0 +1,25 @@
+# Ignore version control
+.git
+.gitignore
+
+# Ignore local build outputs
+target/
+build/
+.gradle/
+
+# Ignore IDE and editor configurations
+.idea/
+*.iml
+.vscode/
+.eclipse/
+
+# Ignore Docker files themselves
+Dockerfile
+docker-compose*.yml
+compose.yml
+.env
+
+# Ignore documentation & OS junk files
+*.md
+.DS_Store
+Thumbs.db
