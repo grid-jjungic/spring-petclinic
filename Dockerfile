@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/root/.m2 \
 COPY src/ src/
 
 RUN --mount=type=cache,target=/root/.m2 \
-    ./mvnw package -DskipTests && cp target/*.jar app.jar
+    ./mvnw package -DskipTests && cp target/spring-petclinic-*.jar app.jar
 
 
 # Final image
