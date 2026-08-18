@@ -23,3 +23,7 @@ compose.yml
 *.md
 .DS_Store
 Thumbs.db
+
+# Scripts for pushing to artifact registries
+push-to-nexus.sh
+push-to-gcp.sh
