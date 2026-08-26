@@ -8,4 +8,4 @@ RUN apt-get update && \
 	git \
 	&& rm -rf /var/lib/apt/lists/*
 
-USER jenkins
+USER root

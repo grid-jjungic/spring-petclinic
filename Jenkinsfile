@@ -57,11 +57,15 @@ pipeline {
 
                 stage('Create & Push MR Docker Image') {
                     steps {
-                        script {
-                            docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDS_ID}") {
-                                def mrImage = docker.build("${env.DOCKER_USER}/mr:${env.SHORT_COMMIT}", ".")
-                                mrImage.push()
-                            }
+                        withCredentials([usernamePassword(
+                            credentialsId: env.DOCKER_CREDS_ID,
+                            usernameVariable: 'DOCKER_HUB_USER',
+                            passwordVariable: 'DOCKER_HUB_PAT'
+                        )]) {
+                            sh 'echo "$DOCKER_HUB_PAT" | docker login -u "$DOCKER_HUB_USER" --password-stdin'
+                            sh 'docker build -t "$DOCKER_USER/mr:$SHORT_COMMIT" .'
+                            sh 'docker push "$DOCKER_USER/mr:$SHORT_COMMIT"'
+                            sh 'docker logout'
                         }
                     }
                 }
@@ -82,12 +86,16 @@ pipeline {
 
                 stage('Create & Push Main Docker Image') {
                     steps {
-                        script {
-                            docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDS_ID}") {
-                                def mainImage = docker.build("${env.DOCKER_USER}/main:${env.SHORT_COMMIT}", ".")
-                                mainImage.push("${env.SHORT_COMMIT}")
-                                mainImage.push("latest")
-                            }
+                        withCredentials([usernamePassword(
+                            credentialsId: env.DOCKER_CREDS_ID,
+                            usernameVariable: 'DOCKER_HUB_USER',
+                            passwordVariable: 'DOCKER_HUB_PAT'
+                        )]) {
+                            sh 'echo "$DOCKER_HUB_PAT" | docker login -u "$DOCKER_HUB_USER" --password-stdin'
+                            sh 'docker build -t "$DOCKER_USER/main:$SHORT_COMMIT" -t "$DOCKER_USER/main:latest" .'
+                            sh 'docker push "$DOCKER_USER/main:$SHORT_COMMIT"'
+                            sh 'docker push "$DOCKER_USER/main:latest"'
+                            sh 'docker logout'
                         }
                     }
                 }
