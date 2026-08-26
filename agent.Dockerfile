@@ -7,5 +7,3 @@ RUN apt-get update && \
 	docker.io \
 	git \
 	&& rm -rf /var/lib/apt/lists/*
-
-USER root
