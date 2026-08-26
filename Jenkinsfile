@@ -62,6 +62,8 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER',
                             passwordVariable: 'DOCKER_HUB_PAT'
                         )]) {
+                            sh 'export DOCKER_CLIENT_TIMEOUT=120'
+                            sh 'export COMPOSE_HTTP_TIMEOUT=120'
                             sh 'echo "$DOCKER_HUB_PAT" | docker login -u "$DOCKER_HUB_USER" --password-stdin'
                             sh 'docker build -t "$DOCKER_USER/mr:$SHORT_COMMIT" .'
                             sh 'docker push "$DOCKER_USER/mr:$SHORT_COMMIT"'
@@ -91,6 +93,8 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER',
                             passwordVariable: 'DOCKER_HUB_PAT'
                         )]) {
+                            sh 'export DOCKER_CLIENT_TIMEOUT=120'
+                            sh 'export COMPOSE_HTTP_TIMEOUT=120'
                             sh 'echo "$DOCKER_HUB_PAT" | docker login -u "$DOCKER_HUB_USER" --password-stdin'
                             sh 'docker build -t "$DOCKER_USER/main:$SHORT_COMMIT" -t "$DOCKER_USER/main:latest" .'
                             sh 'docker push "$DOCKER_USER/main:$SHORT_COMMIT"'
