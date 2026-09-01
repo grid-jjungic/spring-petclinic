@@ -35,7 +35,7 @@ jobs:
 
       - name: Running Tests
         id: tests
-        run: ./mvnw test
+        run: ./mvnw test -Dmanagement.metrics.enable.process.cpu=false -Dmanagement.defaults.metrics.export.enabled=false
 
       - name: Uploading Tests
         if: failure()
