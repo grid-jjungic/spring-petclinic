@@ -81,6 +81,6 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ vars.DOCKER_HUB_USER }}/mr:${{ steps.vars.outputs.short_sha }}
+            ${{ vars.DOCKER_USERNAME }}/mr:${{ steps.vars.outputs.short_sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
