@@ -37,7 +37,7 @@ jobs:
         run: ./mvnw test
 
       - name: Uploading Tests
-        if: ${{ steps.tests.outcome == "failure" }}
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
