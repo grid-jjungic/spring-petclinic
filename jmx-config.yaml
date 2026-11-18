@@ -1,0 +1,56 @@
+rules:
+  # --- Operating System & CPU Metrics ---
+  - pattern: "java.lang<type=OperatingSystem><>AvailableProcessors"
+    name: os_available_processors
+    type: GAUGE
+
+  - pattern: "java.lang<type=OperatingSystem><>SystemLoadAverage"
+    name: os_system_load_average
+    type: GAUGE
+
+  - pattern: "java.lang<type=OperatingSystem><>OpenFileDescriptorCount"
+    name: os_open_file_descriptor_count
+    type: GAUGE
+
+  - pattern: "java.lang<type=OperatingSystem><>SystemCpuLoad"
+    name: os_system_cpu_load
+    type: GAUGE
+
+  - pattern: "java.lang<type=OperatingSystem><>ProcessCpuLoad"
+    name: os_process_cpu_load
+    type: GAUGE
+
+  # --- Physical & Virtual Memory Metrics ---
+  - pattern: "java.lang<type=OperatingSystem><>(TotalPhysicalMemorySize|TotalMemorySize)"
+    name: os_total_physical_memory_bytes
+    type: GAUGE
+
+  - pattern: "java.lang<type=OperatingSystem><>CommittedVirtualMemorySize"
+    name: os_committed_virtual_memory_bytes
+    type: GAUGE
+
+  # --- Classloading Metrics ---
+  - pattern: "java.lang<type=ClassLoading><>LoadedClassCount"
+    name: jvm_classes_loaded
+    type: GAUGE
+
+  # --- Standard JVM Uptime & Memory Defaults (Keep for Dashboard compatibility) ---
+  - pattern: "java.lang<type=Runtime><>StartTime"
+    name: process_start_time_seconds
+    valueFactor: 0.001
+    type: GAUGE
+
+  - pattern: "java.lang<type=Runtime><>Uptime"
+    name: process_uptime_seconds
+    valueFactor: 0.001
+    type: GAUGE
+
+  - pattern: "java.lang<type=Memory><HeapMemoryUsage>(used|committed|max)"
+    name: jvm_memory_used_bytes
+    labels:
+      area: "heap"
+      id: "$1"
+    type: GAUGE
+
+  # Fallback rule for all unmapped JMX metrics
+  - pattern: ".*"

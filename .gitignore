@@ -49,3 +49,7 @@ _site/
 
 ### ENV ###
 .env
+
+.terraform/
+.terraform*
+terraform*
